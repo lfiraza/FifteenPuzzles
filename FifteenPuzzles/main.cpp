@@ -14,10 +14,9 @@
 #include <cstdlib>
 #include <cmath>
 #include <iostream>
+#include "solvablechecker.h"
 
 using namespace std;
-
-bool ifSolvable(int [], int, int);
 /*
  * 
  */
@@ -49,43 +48,3 @@ int main(int argc, char** argv) {
     
     return 0;
 }
-
-bool ifSolvable(int puzzle[], int row, int col){
-    int parity = 0;
-    int gridWidth = col;
-    int helperRow = 0;
-    int blankRow = 0; 
-    int length = row * col;
-    
-  
-
-    for (int i = 0; i < length; i++)
-    {
-        if (i % gridWidth == 0) { 
-            helperRow++;
-        }
-        if (puzzle[i] == 0) { 
-            blankRow = helperRow; 
-            continue;
-        }
-        for (int j = i + 1; j < length; j++)
-        {
-            if (puzzle[i] > puzzle[j] && puzzle[j] != 0)
-            {
-                parity++;
-            }
-        }
-    }
-
-    if (gridWidth % 2 == 0) {
-        if (blankRow % 2 == 0) { 
-            return (parity % 2 == 0);
-        } else { 
-            return (parity % 2 != 0);
-        }
-    } else {
-        return (parity % 2 == 0);
-    }
-    
-}
-
