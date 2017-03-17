@@ -1,9 +1,15 @@
 import numpy as np
 
 class Node:
-    """Mainly classes for puzzle nodes"""
+    """
+    Mainly classes for puzzle nodes
+    """
+
     def __init__(self, puzzle):
         self.__puzzle = puzzle
+        self.children = {}
+        self.positionNull = self.__positionNull()
+        self.__setChildren()
 
     def __inversionCount(self):
         puzzle = self.__puzzle.flatten()
@@ -15,14 +21,9 @@ class Node:
                                 inversionCounter += 1
         return inversionCounter
 
-    def __positionNullFind(self):
-        grid = len(self.__puzzle[0])
+    def __positionNullFromBottom(self):
         row = len(self.__puzzle)
-
-        for i in range(row - 1, -1, -1):
-            for j in range(grid - 1, -1, -1):
-                if self.__puzzle[i][j] == 0:
-                    return row - i
+        return row - self.positionNull[0]
 
     def __ifSolvable(self):
         inversion = self.__inversionCount()
@@ -30,7 +31,7 @@ class Node:
         if grid % 2:
                 return not(inversion % 2)
         else:
-                positionNull = self.__positionNullFind()
+                positionNull = self.__positionNullFromBottom()
                 if positionNull % 2:
                         return not(inversion % 2)
                 else:
@@ -38,3 +39,60 @@ class Node:
 
     def checkSolvability(self):
         return self.__ifSolvable()
+
+    def __positionNull(self):
+        grid = len(self.__puzzle[0])
+        row = len(self.__puzzle)
+
+        for i in range(row - 1, -1, -1):
+            for j in range(grid - 1, -1, -1):
+                if self.__puzzle[i][j] == 0:
+                    return i, j
+
+    def __setChildren(self):
+        positionNull = {'row': self.positionNull[0], 
+                        'col': self.positionNull[1]}
+
+        grid = len(self.__puzzle[0])
+        row = len(self.__puzzle)
+
+        puzzle = np.copy(self.__puzzle)
+
+        if positionNull['row'] == 0:
+            puzzle[0][positionNull['col']], puzzle[1][positionNull['col']] = puzzle[1][positionNull['col']], puzzle[0][positionNull['col']]
+            self.children['D'] = np.copy(puzzle)
+            puzzle[0][positionNull['col']], puzzle[1][positionNull['col']] = puzzle[1][positionNull['col']], puzzle[0][positionNull['col']]
+        elif positionNull['row'] == row-1:
+            puzzle[positionNull['row']][positionNull['col']], puzzle[positionNull['row']-1][positionNull['col']] = puzzle[positionNull['row']-1][positionNull['col']], puzzle[positionNull['row']][positionNull['col']]
+            self.children['G'] = np.copy(puzzle)
+            puzzle[positionNull['row']][positionNull['col']], puzzle[positionNull['row']-1][positionNull['col']] = puzzle[positionNull['row']-1][positionNull['col']], puzzle[positionNull['row']][positionNull['col']]
+        else:
+            puzzle[positionNull['row']][positionNull['col']], puzzle[positionNull['row']+1][positionNull['col']] = puzzle[positionNull['row']+1][positionNull['col']], puzzle[positionNull['row']][positionNull['col']]
+            self.children['D'] = np.copy(puzzle)
+            puzzle[positionNull['row']][positionNull['col']], puzzle[positionNull['row']+1][positionNull['col']] = puzzle[positionNull['row']+1][positionNull['col']], puzzle[positionNull['row']][positionNull['col']]
+            puzzle[positionNull['row']][positionNull['col']], puzzle[positionNull['row']-1][positionNull['col']] = puzzle[positionNull['row']-1][positionNull['col']], puzzle[positionNull['row']][positionNull['col']]
+            self.children['G'] = np.copy(puzzle)
+            puzzle[positionNull['row']][positionNull['col']], puzzle[positionNull['row']-1][positionNull['col']] = puzzle[positionNull['row']-1][positionNull['col']], puzzle[positionNull['row']][positionNull['col']]
+
+        if positionNull['col'] == 0:
+            puzzle[positionNull['row']][0], puzzle[positionNull['row']][1] = puzzle[positionNull['row']][1], puzzle[positionNull['row']][0]
+            self.children['P'] = np.copy(puzzle)
+            puzzle[positionNull['row']][0], puzzle[positionNull['row']][1] = puzzle[positionNull['row']][1], puzzle[positionNull['row']][0]
+
+        elif positionNull['col'] == col-1:
+            puzzle[positionNull['row']][positionNull['col']], puzzle[positionNull['row']][positionNull['col']-1] = puzzle[positionNull['row']][positionNull['col']-1], puzzle[positionNull['row']][positionNull['col']]
+            self.children['L'] = np.copy(puzzle)
+            puzzle[positionNull['row']][positionNull['col']], puzzle[positionNull['row']][positionNull['col']-1] = puzzle[positionNull['row']][positionNull['col']-1], puzzle[positionNull['row']][positionNull['col']]
+
+        else:
+            puzzle[positionNull['row']][positionNull['col']], puzzle[positionNull['row']][positionNull['col']+1] = puzzle[positionNull['row']][positionNull['col']+1], puzzle[positionNull['row']][positionNull['col']] 
+            self.children['P'] = np.copy(puzzle)
+            puzzle[positionNull['row']][positionNull['col']], puzzle[positionNull['row']][positionNull['col']+1] = puzzle[positionNull['row']][positionNull['col']+1], puzzle[positionNull['row']][positionNull['col']] 
+
+            puzzle[positionNull['row']][positionNull['col']], puzzle[positionNull['row']][positionNull['col']-1] = puzzle[positionNull['row']][positionNull['col']-1], puzzle[positionNull['row']][positionNull['col']]
+            self.children['L'] = np.copy(puzzle)
+            puzzle[positionNull['row']][positionNull['col']], puzzle[positionNull['row']][positionNull['col']-1] = puzzle[positionNull['row']][positionNull['col']-1], puzzle[positionNull['row']][positionNull['col']]
+
+
+    def getChildren(self):
+        return self.children
