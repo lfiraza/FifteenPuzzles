@@ -7,10 +7,7 @@ import numpy as np
 import sys, getopt
 
 def main(argv):
-    start()
-
-
-            
+    start() 
 
 def start():
 
