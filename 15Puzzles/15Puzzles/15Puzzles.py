@@ -7,7 +7,34 @@ import numpy as np
 import sys, getopt
 
 def main(argv):
-    start() 
+
+    method = ''
+    settings = ''
+
+    try:
+        opts, args = getopt.getopt(argv, "hb:d:n:", ["help", "bfs=", "dfs=", "nn="])
+    except getopt.GetoptError as error:
+        print(error)
+        sys.exit(2)
+
+    for opt, arg in opts:
+        if opt in ("-h", "--help"):
+            print("Help")
+        elif opt in ("-b", "--bfs"):
+            method = 'bfs'
+            settings = arg
+            print("BFS")
+        elif opt in ("-d", "--dfs"):
+            method = 'dfs'
+            settings = arg
+            print("DFS")
+        elif opt in ("-n", "--nn"):
+            method = 'astar'
+            settings = arg
+            print("AStar")
+        else:
+            assert False, "Error"
+
 
 def start():
 
