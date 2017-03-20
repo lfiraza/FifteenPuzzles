@@ -1,7 +1,8 @@
-#!/usr/bin/python3
+#!/usr/local/bin/python3
 
 from Node import Node
 from Bfs import Bfs
+from Dfs import Dfs
 import numpy as np
 import sys, getopt
 
@@ -26,10 +27,17 @@ def start():
     end = Node(endPuzzle)
 
     if start.checkSolvability():
+        '''
         bfs = Bfs(start, end)
         bfs.solve()
 
         solutionNode = bfs.solutionNode
+        '''
+
+        dfs = Dfs(start, end)
+        dfs.solve()
+
+        solutionNode = dfs.solutionNode
 
         solutionStates = []
         solutionMoves = []
