@@ -5,13 +5,11 @@ import numpy as np
 row = 4
 col = 4
 
-startPuzzle = np.array([[1,2,3],
-                        [3,4,5],
-                        [6,0,7]])
+startPuzzle = np.array([[0, 1, 2], 
+                        [3, 4, 5]])
 
-endPuzzle = np.array([[1,2,3],
-                      [3,4,5],
-                      [6,7,0]])
+endPuzzle = np.array([[1, 2, 3], 
+                      [4, 5, 0]])
 
 if __name__ == "__main__":
     start = Node(startPuzzle)
@@ -34,15 +32,12 @@ if __name__ == "__main__":
         del bfs
         del solutionNode
 
-        print("Ruchy:")
+        print(len(solutionMoves))
         for i in range(len(solutionMoves)-1, -1, -1):
-            print(solutionMoves[i])
-        
-        print("Stany:")
-        print(startPuzzle)
-        for i in range(len(solutionStates)-1, -1, -1): 
-            print(solutionStates[i])
+            print(solutionMoves[i], end="")
+
+        print()
     else:
-        print("Układ nierozwiązywalny")
+        print(-1)
 
     

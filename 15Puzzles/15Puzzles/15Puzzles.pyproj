@@ -22,7 +22,13 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AStar.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Bfs.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Dfs.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Node.py">

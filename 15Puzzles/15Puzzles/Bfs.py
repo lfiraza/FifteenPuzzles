@@ -24,7 +24,8 @@ class Bfs(object):
                 del self.__visited
                 break
             if lastNode in self.__visited: continue
-            for move, puzzles in lastNode.getChildren().items():
+            children = lastNode.getChildren()
+            for move, puzzles in children.items():
                 newNode = Node(puzzles, lastNode, move)
                 if newNode in self.__visited: continue
                 self.__queue.put(newNode)
