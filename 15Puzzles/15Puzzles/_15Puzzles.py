@@ -12,5 +12,8 @@ endPuzzle = np.array([[1,2],
 
 if __name__ == "__main__":
     node = Node(startPuzzle)
-    print(node.checkSolvability())
-    print(node.getChildren())
+
+    end = Node(endPuzzle)
+
+    if node == node:
+        print(True)

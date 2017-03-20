@@ -79,7 +79,7 @@ class Node:
             self.children['P'] = np.copy(puzzle)
             puzzle[positionNull['row']][0], puzzle[positionNull['row']][1] = puzzle[positionNull['row']][1], puzzle[positionNull['row']][0]
 
-        elif positionNull['col'] == col-1:
+        elif positionNull['col'] == grid-1:
             puzzle[positionNull['row']][positionNull['col']], puzzle[positionNull['row']][positionNull['col']-1] = puzzle[positionNull['row']][positionNull['col']-1], puzzle[positionNull['row']][positionNull['col']]
             self.children['L'] = np.copy(puzzle)
             puzzle[positionNull['row']][positionNull['col']], puzzle[positionNull['row']][positionNull['col']-1] = puzzle[positionNull['row']][positionNull['col']-1], puzzle[positionNull['row']][positionNull['col']]
@@ -96,3 +96,9 @@ class Node:
 
     def getChildren(self):
         return self.children
+
+    def getPuzzles(self):
+        return self.__puzzle
+
+    def __eq__(self, other):
+        return (self.__puzzle==other.getPuzzles()).all()
