@@ -97,9 +97,7 @@ class Node:
 
 
     def getChildren(self):
-        children = self.children
-        del self.children
-        return children
+        return self.children
 
     def getPuzzles(self):
         return self.__puzzle

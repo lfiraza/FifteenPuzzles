@@ -20,8 +20,6 @@ class Bfs(object):
             lastNode = self.__queue.get()
             if lastNode == self.__end: 
                 self.solutionNode = lastNode
-                del self.__queue
-                del self.__visited
                 break
             if lastNode in self.__visited: continue
             children = lastNode.getChildren()
