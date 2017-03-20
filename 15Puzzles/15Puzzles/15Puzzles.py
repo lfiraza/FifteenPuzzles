@@ -17,11 +17,13 @@ def start():
     row = 4
     col = 4
 
-    startPuzzle = np.array([[0, 1, 2], 
-                            [3, 4, 5]])
+    startPuzzle = np.array([[1,2,3],
+                            [4,0,6],
+                            [7,5,8]])
 
-    endPuzzle = np.array([[1, 2, 3], 
-                          [4, 5, 0]])
+    endPuzzle = np.array([[1,2,3],
+                          [4,5,6],
+                          [7,8,0]])
 
     start = Node(startPuzzle)
     end = Node(endPuzzle)
@@ -36,7 +38,6 @@ def start():
 
         dfs = Dfs(start, end)
         dfs.solve()
-
         solutionNode = dfs.solutionNode
 
         solutionStates = []
