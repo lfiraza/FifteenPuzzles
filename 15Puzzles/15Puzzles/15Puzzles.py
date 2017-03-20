@@ -6,44 +6,7 @@ import numpy as np
 import sys, getopt
 
 def main(argv):
-
-    method = ''
-    order = ''
-
-    try:
-        opts, args = getopt.getopt(argv,"hb:d:n:",["help","bfs=","dfs=","nn="])
-    except getopt.GetoptError:
-        print("15puzzle: An options error")
-        print("Try './15puzzle.py --help' for more information.")
-        sys.exit(2)
-
-    for opt, arg in opts:
-        if opt in ("-h", "--help"):
-                  print("Usage: 15puzzle [OPTION] ORDER/HEURISTIC_ID")
-                  print("   -b / --bfs order    Breadth-first search")
-                  print("   -b / --bfs order    Depth First Search")
-                  print("   -n / --nn heuristic id  A* search")
-                  print("   -h / --help")
-                  print("ORDER: Example - GDLP \n   G - Top\n   D - Down\n    L - Left\n    P - Right\n  R - Random")
-                  sys.exit()
-        elif opt in ("-b", "--bfs"):
-                  method = "bfs"
-                  order = arg
-                  start()
-        elif opt in ("-d", "--dfs"):
-                  print("This method is unsupported")
-                  sys.exit()
-                  method = "dfs"
-                  odrder = arg
-        elif opt in ("-n", "--nn"):
-                  print("This method is unsupported")
-                  sys.exit()
-                  method = "astar"
-                  odrder = arg
-        else:
-                  print("15puzzle: An options error")
-                  print("Try '15puzzle.py --help' for more information.")
-                  sys.exit(2)
+    start()
 
 
             
