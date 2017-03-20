@@ -37,7 +37,7 @@ class Dfs(object):
         print(node)
         if node == self.__end:
             self.solutionNode = node
-            return 0
+            return
 
         children = node.getChildren()
         
