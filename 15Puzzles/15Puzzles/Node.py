@@ -5,11 +5,13 @@ class Node:
     Mainly classes for puzzle nodes
     """
 
-    def __init__(self, puzzle):
+    def __init__(self, puzzle, parent=None, move=None):
         self.__puzzle = puzzle
         self.children = {}
         self.positionNull = self.__positionNull()
         self.__setChildren()
+        self.parent = parent
+        self.move = move
 
     def __inversionCount(self):
         puzzle = self.__puzzle.flatten()
@@ -102,3 +104,6 @@ class Node:
 
     def __eq__(self, other):
         return (self.__puzzle==other.getPuzzles()).all()
+
+    def __str__(self):
+        return np.array_str(self.__puzzle)
