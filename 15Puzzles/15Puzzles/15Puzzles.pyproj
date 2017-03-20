@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>83d10a69-9478-4699-b4a0-19f9578fd5b4</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>_15Puzzles.py</StartupFile>
+    <StartupFile>15Puzzles.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -34,7 +34,7 @@
     <Compile Include="Node.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="_15Puzzles.py" />
+    <Compile Include="15Puzzles.py" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
