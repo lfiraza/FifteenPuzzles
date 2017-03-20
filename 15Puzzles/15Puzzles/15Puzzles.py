@@ -17,9 +17,12 @@ def main(argv):
         print(error)
         sys.exit(2)
 
+    if len(opts) == 0:
+        help()
+
     for opt, arg in opts:
         if opt in ("-h", "--help"):
-            print("Help")
+            help()
         elif opt in ("-b", "--bfs"):
             method = 'bfs'
             settings = arg
@@ -34,6 +37,23 @@ def main(argv):
             print("AStar")
         else:
             assert False, "Error"
+
+def help():
+    print("Usage: ./15Puzzles OPTION [VALUE]")
+    print("Options:")
+    print("     -h --help   this help")
+    print("     -b --bfs    breadth-first search")
+    print("     -d --dfs    depth first search")
+    print("     -n --nn     A*")
+    print("Values:")
+    print(" For BFS and DFS is possible ordering moves")
+    print("     Example: ./15Puzzles -b GDPL or ./15Puzzles -b R")
+    print("     G - Top")
+    print("     D - Down")
+    print("     P - Right")
+    print("     L - Left")
+    print(" For A* is possible select heuristic")
+    print("     Example: ./15Puzzles -n 1")
 
 
 def start():
