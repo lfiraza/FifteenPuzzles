@@ -57,6 +57,7 @@ def help():
     print("     Example: ./15Puzzles -n 1")
     print("     1 - Manhattan Distance")
     print("     2 - Inversion Counter")
+    print("     3 - Euclidean Distance")
 
 
 def start(method, settings):
