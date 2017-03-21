@@ -3,6 +3,7 @@
 from Node import Node
 from Bfs import Bfs
 from Dfs import Dfs
+from AStar import AStar
 import numpy as np
 import sys, getopt
 
@@ -62,7 +63,7 @@ def start(method, settings):
     col = 4
 
     startPuzzle = np.array([[1,2,3],
-                            [4,5,0]])
+                            [4,0,5]])
 
     endPuzzle = np.array([[1,2,3],
                           [4,5,0]])
@@ -83,7 +84,9 @@ def start(method, settings):
             dfs.solve()
             solutionNode = dfs.solutionNode
         elif method == "astar":
-            print("Still unsupported")
+            astar = AStar(start, end)
+            astar.solve()
+            solutionNode = astar.solutionNode
         else:
             print("Unknow method")
             sys.exit(3)

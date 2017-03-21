@@ -9,7 +9,6 @@ class Bfs(object):
         self.__start = startNode
         self.__end = endNode
         self.__visited = []
-        self.visitedNodeCounter = 0
         self.__queue = Queue()
         self.solutionNode = None
 
@@ -28,4 +27,3 @@ class Bfs(object):
                 if newNode in self.__visited: continue
                 self.__queue.put(newNode)
             self.__visited.append(lastNode)
-            self.visitedNodeCounter += 1

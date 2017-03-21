@@ -8,7 +8,7 @@ class Node:
     def __init__(self, puzzle, parent=None, move=None):
         self.__puzzle = puzzle
         self.children = {}
-        self.positionNull = self.__positionNull()
+        self.positionNull = self.positionValue(0)
         self.__setChildren()
         self.parent = parent
         self.move = move
@@ -42,13 +42,13 @@ class Node:
     def checkSolvability(self):
         return self.__ifSolvable()
 
-    def __positionNull(self):
+    def positionValue(self, value):
         grid = len(self.__puzzle[0])
         row = len(self.__puzzle)
 
         for i in range(row - 1, -1, -1):
             for j in range(grid - 1, -1, -1):
-                if self.__puzzle[i][j] == 0:
+                if self.__puzzle[i][j] == value:
                     return i, j
 
     def __setChildren(self):
