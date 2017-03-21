@@ -4,16 +4,20 @@ from queue import PriorityQueue
 
 class AStar(object):
     """description of class"""
-    def __init__(self, startNode, endNode):
+    def __init__(self, startNode, endNode, idH):
         self.__start = startNode
         self.__end = endNode
         self.__visited = []
         self.__queue = PriorityQueue()
         self.solutionNode = None
+        self.idH = idH
 
     def solve(self):
         selfCounter = 1
-        self.__queue.put((self.__manhattan(self.__start), 0, self.__start))
+
+        score = self.__score(self.__start, self.idH)
+
+        self.__queue.put((score, 0, self.__start))
 
         while not self.__queue.empty():
             _, _, lastNode = self.__queue.get()
@@ -25,10 +29,24 @@ class AStar(object):
             children = lastNode.getChildren()
             for move, puzzles in children.items():
                 newNode = Node(puzzles, lastNode, move)
-                if newNode in self.__visited: continue
-                self.__queue.put((self.__manhattan(newNode), selfCounter, newNode))
+                if newNode in self.__visited: 
+                    continue
+                score = self.__score(newNode, self.idH)
+                self.__queue.put((score, selfCounter, newNode))
                 selfCounter += 1
             self.__visited.append(lastNode)
+
+    def __score(self, node, id):
+        score = 0
+
+        if id == 1:
+            score = self.__manhattan(node)
+        elif id == 2:
+            score = self.__inversion(node)
+        else:
+            score = self.__manhattan(node)
+
+        return score
 
     def __manhattan(self, node):
         score = 0
@@ -38,5 +56,9 @@ class AStar(object):
             rowEnd, colEnd = self.__end.positionValue(i)
             score += abs(rowEnd - rowNode) + abs(colEnd - colNode)
         return score
+
+    def __inversion(self, node):
+        return node.inversionCount()
+
 
 

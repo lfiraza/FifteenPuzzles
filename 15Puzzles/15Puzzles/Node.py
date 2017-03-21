@@ -13,7 +13,7 @@ class Node:
         self.parent = parent
         self.move = move
 
-    def __inversionCount(self):
+    def inversionCount(self):
         puzzle = self.__puzzle.flatten()
         length = len(puzzle)
         inversionCounter = 0
@@ -28,7 +28,7 @@ class Node:
         return row - self.positionNull[0]
 
     def __ifSolvable(self):
-        inversion = self.__inversionCount()
+        inversion = self.inversionCount()
         grid = len(self.__puzzle[0])
         if grid % 2:
                 return not(inversion % 2)

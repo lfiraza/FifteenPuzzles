@@ -55,6 +55,8 @@ def help():
     print("     L - Left")
     print(" For A* is possible select heuristic")
     print("     Example: ./15Puzzles -n 1")
+    print("     1 - Manhattan Distance")
+    print("     2 - Inversion Counter")
 
 
 def start(method, settings):
@@ -86,7 +88,7 @@ def start(method, settings):
             dfs.solve()
             solutionNode = dfs.solutionNode
         elif method == "astar":
-            astar = AStar(start, end)
+            astar = AStar(start, end, settings)
             astar.solve()
             solutionNode = astar.solutionNode
         else:
