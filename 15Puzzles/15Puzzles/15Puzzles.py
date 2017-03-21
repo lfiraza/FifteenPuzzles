@@ -58,6 +58,7 @@ def help():
     print("     1 - Manhattan Distance")
     print("     2 - Inversion Counter")
     print("     3 - Euclidean Distance")
+    print("     4 - Chebyshev Distance")
 
 
 def start(method, settings):
@@ -65,13 +66,11 @@ def start(method, settings):
     row = 4
     col = 4
 
-    startPuzzle = np.array([[2,6,1],
-                            [0,7,8],
-                            [3,5,4]])
+    startPuzzle = np.array([[2,3,1],
+                            [0,4,5]])
 
     endPuzzle = np.array([[1,2,3],
-                          [4,5,6],
-                          [7,8,0]])
+                          [4,5,0]])
 
     start = Node(startPuzzle)
     end = Node(endPuzzle)

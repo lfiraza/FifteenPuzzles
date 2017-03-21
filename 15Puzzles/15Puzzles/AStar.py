@@ -40,12 +40,14 @@ class AStar(object):
     def __score(self, node, id):
         score = 0
 
-        if id == 1:
+        if id == '1':
             score = self.__manhattan(node)
-        elif id == 2:
+        elif id == '2':
             score = self.__inversion(node)
-        elif id == 3:
+        elif id == '3':
             score = self.__euclidean(node)
+        elif id == '4':
+            score = self.__chebyshev(node)
         else:
             score = self.__manhattan(node)
 
@@ -70,6 +72,15 @@ class AStar(object):
             rowNode, colNode = node.positionValue(i)
             rowEnd, colEnd = self.__end.positionValue(i)
             score += math.sqrt((rowEnd - rowNode)**2 + (colEnd - colNode)**2)
+        return score
+
+    def __chebyshev(self, node):
+        score = 0
+        puzzles = node.getPuzzles()
+        for i in range(1, len(puzzles)*len(puzzles[0])):
+            rowNode, colNode = node.positionValue(i)
+            rowEnd, colEnd = self.__end.positionValue(i)
+            score += ((rowEnd - rowNode) + (colEnd - colNode)) - 1 * min((rowEnd - rowNode), (colEnd - colNode))
         return score
 
 
