@@ -1,6 +1,7 @@
 import numpy as np
 from Node import Node
 from queue import PriorityQueue
+import math
 
 class AStar(object):
     """description of class"""
@@ -43,6 +44,8 @@ class AStar(object):
             score = self.__manhattan(node)
         elif id == 2:
             score = self.__inversion(node)
+        elif id == 3:
+            score = self.__euclidean(node)
         else:
             score = self.__manhattan(node)
 
@@ -59,6 +62,15 @@ class AStar(object):
 
     def __inversion(self, node):
         return node.inversionCount()
+
+    def __euclidean(self, node):
+        score = 0
+        puzzles = node.getPuzzles()
+        for i in range(1, len(puzzles)*len(puzzles[0])):
+            rowNode, colNode = node.positionValue(i)
+            rowEnd, colEnd = self.__end.positionValue(i)
+            score += math.sqrt((rowEnd - rowNode)**2 + (colEnd - colNode)**2)
+        return score
 
 
 
