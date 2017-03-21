@@ -26,8 +26,7 @@ class Dfs(object):
                 newNode = Node(puzzles, lastNode, move)
                 if newNode in self.__visited: continue
                 ''' 
-                to co wrzucimy w petli ostatnie bedzie brane jako pierwsze, 
-                dlatego odwracam liste
+                to co wrzucimy w petli ostatnie bedzie brane jako pierwsze
                 '''
                 self.__queue.put(newNode)
 

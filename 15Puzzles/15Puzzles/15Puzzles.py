@@ -19,6 +19,7 @@ def main(argv):
 
     if len(opts) == 0:
         help()
+        sys.exit()
 
     for opt, arg in opts:
         if opt in ("-h", "--help"):
@@ -26,17 +27,16 @@ def main(argv):
         elif opt in ("-b", "--bfs"):
             method = 'bfs'
             settings = arg
-            print("BFS")
         elif opt in ("-d", "--dfs"):
             method = 'dfs'
             settings = arg
-            print("DFS")
         elif opt in ("-n", "--nn"):
             method = 'astar'
             settings = arg
-            print("AStar")
         else:
             assert False, "Error"
+
+    start(method, settings)
 
 def help():
     print("Usage: ./15Puzzles OPTION [VALUE]")
@@ -56,33 +56,37 @@ def help():
     print("     Example: ./15Puzzles -n 1")
 
 
-def start():
+def start(method, settings):
 
     row = 4
     col = 4
 
     startPuzzle = np.array([[1,2,3],
-                            [4,0,6],
-                            [7,5,8]])
+                            [4,5,0]])
 
     endPuzzle = np.array([[1,2,3],
-                          [4,5,6],
-                          [7,8,0]])
+                          [4,5,0]])
 
     start = Node(startPuzzle)
     end = Node(endPuzzle)
 
+    solutionNode = None
+
     if start.checkSolvability():
-        '''
-        bfs = Bfs(start, end)
-        bfs.solve()
-
-        solutionNode = bfs.solutionNode
-        '''
-
-        dfs = Dfs(start, end)
-        dfs.solve()
-        solutionNode = dfs.solutionNode
+        
+        if method == "bfs":
+            bfs = Bfs(start, end)
+            bfs.solve()
+            solutionNode = bfs.solutionNode
+        elif method == "dfs":
+            dfs = Dfs(start, end)
+            dfs.solve()
+            solutionNode = dfs.solutionNode
+        elif method == "astar":
+            print("Still unsupported")
+        else:
+            print("Unknow method")
+            sys.exit(3)
 
         solutionStates = []
         solutionMoves = []
