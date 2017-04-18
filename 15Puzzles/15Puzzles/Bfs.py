@@ -1,7 +1,6 @@
 import numpy as np
 from Node import Node
 from queue import Queue
-import time
 
 class Bfs(object):
     """description of class"""
@@ -13,6 +12,7 @@ class Bfs(object):
         self.__queue = Queue()
         self.solutionNode = None
         self.__settings = settings
+        self.counterNodes = 0
 
     def solve(self):
         self.__queue.put(self.__start)
@@ -38,3 +38,4 @@ class Bfs(object):
                     self.__queue.put(newNode)
 
             self.__visited[lastNode.hash] = None
+            self.counterNodes += 1

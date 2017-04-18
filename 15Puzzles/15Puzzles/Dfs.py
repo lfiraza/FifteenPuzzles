@@ -11,6 +11,7 @@ class Dfs(object):
         self.solutionNode = None
         self.__queue = LifoQueue()
         self.__settings = settings
+        self.counterNodes = 0
 
     def dfs_iterative(self):
 
@@ -23,6 +24,7 @@ class Dfs(object):
         while not self.__queue.empty():            
             lastNode = self.__queue.get()
             self.__visited[lastNode.hash] = None
+            self.counterNodes += 1
             if lastNode == self.__end: 
                 self.solutionNode = lastNode
                 break
@@ -48,6 +50,7 @@ class Dfs(object):
             moves = self.__settings
 
         self.__visited[node.hash] = None
+        self.counterNodes += 1
         print(node)
         if node == self.__end:
             self.solutionNode = node

@@ -5,7 +5,7 @@ from Bfs import Bfs
 from Dfs import Dfs
 from AStar import AStar
 import numpy as np
-import sys, getopt
+import sys, getopt, time
 
 def main(argv):
 
@@ -63,6 +63,8 @@ def help():
 
 def start(method, settings):
 
+    startFullTime = time.perf_counter()
+
     row = 4
     col = 4
 
@@ -76,6 +78,7 @@ def start(method, settings):
     end = Node(endPuzzle)
 
     solutionNode = None
+    visitedNodes = 0
 
     if start.checkSolvability():
         
@@ -83,14 +86,17 @@ def start(method, settings):
             bfs = Bfs(start, end, settings)
             bfs.solve()
             solutionNode = bfs.solutionNode
+            visitedNodes = bfs.counterNodes
         elif method == "dfs":
             dfs = Dfs(start, end, settings)
             dfs.solve()
             solutionNode = dfs.solutionNode
+            visitedNodes = dfs.counterNodes
         elif method == "astar":
             astar = AStar(start, end, settings)
             astar.solve()
             solutionNode = astar.solutionNode
+            visitedNodes = astar.counterNodes
         else:
             print("Unknow method")
             sys.exit(3)
@@ -110,6 +116,15 @@ def start(method, settings):
         print()
     else:
         print(-1)
+
+    fullTime = "%.4f" % (time.perf_counter() - startFullTime)
+
+    print()
+    print("Stats:")
+    print('Full Time: ', fullTime, ' sec')
+    if start.checkSolvability():
+        print('Steps to solution: ', len(solutionMoves))
+        print('Visited nodes: ', visitedNodes)
 
 if __name__ == "__main__":
     main(sys.argv[1:])

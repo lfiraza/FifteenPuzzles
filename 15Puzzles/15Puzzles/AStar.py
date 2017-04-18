@@ -12,6 +12,7 @@ class AStar(object):
         self.__queue = PriorityQueue()
         self.solutionNode = None
         self.idH = idH
+        self.counterNodes = 0
 
     def solve(self):
         selfCounter = 1
@@ -36,6 +37,7 @@ class AStar(object):
                 self.__queue.put((score, selfCounter, newNode))
                 selfCounter += 1
             self.__visited[lastNode.hash] = None
+            self.counterNodes += 1
 
     def __score(self, node, id):
         score = 0
