@@ -13,7 +13,7 @@
     <Name>15Puzzles</Name>
     <RootNamespace>15Puzzles</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>-b DD</CommandLineArguments>
+    <CommandLineArguments>-d R</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">

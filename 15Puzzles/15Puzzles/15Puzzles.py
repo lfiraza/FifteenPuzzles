@@ -80,11 +80,11 @@ def start(method, settings):
     if start.checkSolvability():
         
         if method == "bfs":
-            bfs = Bfs(start, end)
+            bfs = Bfs(start, end, settings)
             bfs.solve()
             solutionNode = bfs.solutionNode
         elif method == "dfs":
-            dfs = Dfs(start, end)
+            dfs = Dfs(start, end, settings)
             dfs.solve()
             solutionNode = dfs.solutionNode
         elif method == "astar":

@@ -12,6 +12,7 @@ class Node:
         self.__setChildren()
         self.parent = parent
         self.move = move
+        self.hash = ''.join(str(e) for e in puzzle.flatten())
 
     def inversionCount(self):
         puzzle = self.__puzzle.flatten()
@@ -103,7 +104,7 @@ class Node:
         return self.__puzzle
 
     def __eq__(self, other):
-        return (self.__puzzle==other.getPuzzles()).all()
+        return (self.hash==other.hash)
 
     def __str__(self):
         return np.array_str(self.__puzzle)

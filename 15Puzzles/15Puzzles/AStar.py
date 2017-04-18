@@ -8,7 +8,7 @@ class AStar(object):
     def __init__(self, startNode, endNode, idH):
         self.__start = startNode
         self.__end = endNode
-        self.__visited = []
+        self.__visited = {}
         self.__queue = PriorityQueue()
         self.solutionNode = None
         self.idH = idH
@@ -26,16 +26,16 @@ class AStar(object):
             if lastNode == self.__end: 
                 self.solutionNode = lastNode
                 break
-            if lastNode in self.__visited: continue
+            if lastNode.hash in self.__visited: continue
             children = lastNode.getChildren()
             for move, puzzles in children.items():
                 newNode = Node(puzzles, lastNode, move)
-                if newNode in self.__visited: 
+                if newNode.hash in self.__visited: 
                     continue
                 score = self.__score(newNode, self.idH)
                 self.__queue.put((score, selfCounter, newNode))
                 selfCounter += 1
-            self.__visited.append(lastNode)
+            self.__visited[lastNode.hash] = None
 
     def __score(self, node, id):
         score = 0
