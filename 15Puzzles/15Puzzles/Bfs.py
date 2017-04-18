@@ -14,6 +14,12 @@ class Bfs(object):
         self.__settings = settings
         self.counterNodes = 0
 
+        'bidirectional'
+        self.__queueFront = Queue()
+        self.__queueBottom = Queue()
+        self.__visitedFront = {}
+        self.__visitedBottom = {}
+
     def solve(self):
         self.__queue.put(self.__start)
         moves = np.array(['G', 'D', 'L', 'P'])
@@ -39,3 +45,15 @@ class Bfs(object):
 
             self.__visited[lastNode.hash] = None
             self.counterNodes += 1
+
+    def solve2(self):
+        self.__queueFront.put(self.__start)
+        self.__queueBottom.put(self.__end)
+        moves = np.array(['G', 'D', 'L', 'P'])
+
+        if(self.__settings[0]!='R'):
+            moves = self.__settings
+
+        while not self.__queueFront.empty() and not self.__queueBottom.empty():
+            lastNodeFront = self.__queueFront.get()
+            lastNodeBottom = self.__queueBottom.get()
