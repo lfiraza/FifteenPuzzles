@@ -98,7 +98,6 @@ def start(method, settings, gui, stdinRead):
         element = 1
         for i in range(row):
             for j in range(col):
-                print(element)
                 endPuzzle[i][j] = element
                 element += 1
         endPuzzle[-1][-1] = 0
@@ -120,7 +119,6 @@ def start(method, settings, gui, stdinRead):
         element = 1
         for i in range(row):
             for j in range(col):
-                print(element)
                 endPuzzle[i][j] = element
                 element += 1
         endPuzzle[-1][-1] = 0
