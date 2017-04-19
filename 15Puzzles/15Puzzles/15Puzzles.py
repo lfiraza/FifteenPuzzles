@@ -82,10 +82,10 @@ def start(method, settings, gui):
     row = 4
     col = 4
 
-    startPuzzle = np.array([[0,2,3,4],
-                            [5,6,1,8],
-                            [9,10,7,12],
-                            [13,14,11,15]])
+    startPuzzle = np.array([[0,1,2,7],
+                            [8,9,12,10],
+                            [13,3,6,4],
+                            [15,14,11,5]])
 
     endPuzzle = np.array([[1,2,3,4],
                           [5,6,7,8],
