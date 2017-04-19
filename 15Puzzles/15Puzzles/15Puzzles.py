@@ -22,7 +22,7 @@ def main(argv):
         sys.exit(2)
 
     if len(opts) == 0:
-        start('astar', '1', True, False)
+        start("astar", '1', True, False)
 
     for opt, arg in opts:
         if opt in ("-h", "--help"):
