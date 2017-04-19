@@ -1,6 +1,6 @@
 import numpy as np
 from Node import Node
-import sys
+import sys, time
 from queue import Queue
 from multiprocessing.dummy import Process
 
@@ -24,20 +24,26 @@ class Bfs(object):
         if(self.__settings[0]!='R'):
             self._moves = self.__settings
 
+        p1 = Process(target=self.bfsLoop)
+        p1.start()
+        time.sleep(0.2)
+
         processes = []
 
-        for i in range(4):
+        for i in range(7):
             p = Process(target=self.bfsLoop)
             processes.append(p)
 
         [x.start() for x in processes]
         [x.join() for x in processes]
+        p1.join()
         
 
     def bfsLoop(self):
 
         while not self.__queue.empty() and not self.solutionNode:
             lastNode = self.__queue.get()
+
             if lastNode == self.__end and not self.solutionNode: 
                 self.solutionNode = lastNode
                 break
