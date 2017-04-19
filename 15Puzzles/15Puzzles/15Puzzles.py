@@ -111,17 +111,19 @@ def start(method, settings, gui, stdinRead):
 
         iteration = 0
         for line in sys.stdin:
+            line = line.split()
             if not iteration:
-                row = line[0]
-                col = line[1]
-                
+                row = int(line[0])
+                col = int(line[1])
+                startPuzzle = np.zeros((col,row), np.uint8)
             else:
                 for i in range(col):
-                    startPuzzle[iteration-1][i] = line[i]
-            
+                    startPuzzle[iteration-1][i] = int(line[i])
+
             iteration += 1
-            
+
         endPuzzle = np.zeros((col,row), np.uint8)
+
 
         element = 1
         for i in range(row):
