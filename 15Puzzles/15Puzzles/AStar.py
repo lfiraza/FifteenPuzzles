@@ -21,10 +21,10 @@ class AStar(object):
 
         self.__queue.put((score, 0, self.__start))
 
-        while not self.__queue.empty():
+        while not self.__queue.empty() and not self.solutionNode:
             _, _, lastNode = self.__queue.get()
 
-            if lastNode == self.__end: 
+            if lastNode == self.__end and not self.solutionNode: 
                 self.solutionNode = lastNode
                 break
             if lastNode.hash in self.__visited: continue

@@ -2,7 +2,6 @@ import numpy as np
 from Node import Node
 import sys, time
 from queue import Queue
-from multiprocessing.dummy import Process
 
 class Bfs(object):
     """description of class"""
@@ -15,32 +14,17 @@ class Bfs(object):
         self.solutionNode = None
         self.__settings = settings
         self.counterNodes = 0
-        self._moves = np.array(['G', 'D', 'L', 'P'])
         
 
     def solve(self):
+
+        moves = np.array(['G', 'D', 'L', 'P'])
+
         self.__queue.put(self.__start)
 
         if(self.__settings[0]!='R'):
-            self._moves = self.__settings
-
-        p1 = Process(target=self.bfsLoop)
-        p1.start()
-        time.sleep(0.2)
-
-        processes = []
-
-        for i in range(7):
-            p = Process(target=self.bfsLoop)
-            processes.append(p)
-
-        [x.start() for x in processes]
-        [x.join() for x in processes]
-        p1.join()
+            moves = self.__settings
         
-
-    def bfsLoop(self):
-
         while not self.__queue.empty() and not self.solutionNode:
             lastNode = self.__queue.get()
 
@@ -51,9 +35,9 @@ class Bfs(object):
             if lastNode.hash in self.__visited: continue
             children = lastNode.getChildren()
             if(self.__settings[0]=='R'):
-                np.random.shuffle(self._moves)
+                np.random.shuffle(moves)
 
-            for move in self._moves:
+            for move in moves:
                 if move in children:
                     newNode = Node(children[move], lastNode, move)
                     if newNode.hash in self.__visited: continue
@@ -61,5 +45,4 @@ class Bfs(object):
 
             self.__visited[lastNode.hash] = None
             self.counterNodes += 1
-
        

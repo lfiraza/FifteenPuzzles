@@ -21,11 +21,11 @@ class Dfs(object):
             moves = self.__settings
 
         self.__queue.put(self.__start)
-        while not self.__queue.empty():            
+        while not self.__queue.empty() and not self.solutionNode:            
             lastNode = self.__queue.get()
             self.__visited[lastNode.hash] = None
             self.counterNodes += 1
-            if lastNode == self.__end: 
+            if lastNode == self.__end and not self.solutionNode: 
                 self.solutionNode = lastNode
                 break
 
