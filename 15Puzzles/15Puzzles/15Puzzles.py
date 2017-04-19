@@ -84,6 +84,10 @@ def start(method, settings, gui, stdinRead):
     startPuzzle = None
     endPuzzle = None
 
+    row = 0
+    col = 0
+
+
     if not stdinRead:
         row = 4
         col = 4
@@ -93,13 +97,14 @@ def start(method, settings, gui, stdinRead):
                             [13,3,6,4],
                             [15,14,11,5]])
 
-        endPuzzle = np.empty((row, col))
+        endPuzzle = np.zeros((col,row), int)
 
         element = 1
         for i in range(row):
-            for j in range(col):
-                endPuzzle[i][j] = element
-                element += 1
+                for j in range(col):
+                    endPuzzle[i][j] = element
+                    element += 1
+
         endPuzzle[-1][-1] = 0
 
     else:
@@ -116,16 +121,16 @@ def start(method, settings, gui, stdinRead):
             
             iteration += 1
             
+        endPuzzle = np.zeros((col,row), np.uint8)
+
         element = 1
         for i in range(row):
-            for j in range(col):
-                endPuzzle[i][j] = element
-                element += 1
+                for j in range(col):
+                    endPuzzle[i][j] = element
+                    element += 1
+
         endPuzzle[-1][-1] = 0
          
-                      
-
-
 
     start = Node(startPuzzle)
     end = Node(endPuzzle)
