@@ -1,6 +1,8 @@
 import numpy as np
 from Node import Node
+import sys
 from queue import Queue
+from multiprocessing.dummy import Process
 
 class Bfs(object):
     """description of class"""
@@ -13,31 +15,39 @@ class Bfs(object):
         self.solutionNode = None
         self.__settings = settings
         self.counterNodes = 0
-
-        'bidirectional'
-        self.__queueFront = Queue()
-        self.__queueBottom = Queue()
-        self.__visitedFront = {}
-        self.__visitedBottom = {}
+        self._moves = np.array(['G', 'D', 'L', 'P'])
+        
 
     def solve(self):
         self.__queue.put(self.__start)
-        moves = np.array(['G', 'D', 'L', 'P'])
 
         if(self.__settings[0]!='R'):
-            moves = self.__settings
+            self._moves = self.__settings
+
+        processes = []
+
+        for i in range(4):
+            p = Process(target=self.bfsLoop)
+            processes.append(p)
+
+        [x.start() for x in processes]
+        [x.join() for x in processes]
+        
+
+    def bfsLoop(self):
 
         while not self.__queue.empty():
             lastNode = self.__queue.get()
             if lastNode == self.__end: 
                 self.solutionNode = lastNode
                 break
+                
             if lastNode.hash in self.__visited: continue
             children = lastNode.getChildren()
             if(self.__settings[0]=='R'):
-                np.random.shuffle(moves)
+                np.random.shuffle(self._moves)
 
-            for move in moves:
+            for move in self._moves:
                 if move in children:
                     newNode = Node(children[move], lastNode, move)
                     if newNode.hash in self.__visited: continue
@@ -46,14 +56,4 @@ class Bfs(object):
             self.__visited[lastNode.hash] = None
             self.counterNodes += 1
 
-    def solve2(self):
-        self.__queueFront.put(self.__start)
-        self.__queueBottom.put(self.__end)
-        moves = np.array(['G', 'D', 'L', 'P'])
-
-        if(self.__settings[0]!='R'):
-            moves = self.__settings
-
-        while not self.__queueFront.empty() and not self.__queueBottom.empty():
-            lastNodeFront = self.__queueFront.get()
-            lastNodeBottom = self.__queueBottom.get()
+       
