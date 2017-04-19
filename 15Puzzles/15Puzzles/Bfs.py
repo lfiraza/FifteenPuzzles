@@ -38,7 +38,7 @@ class Bfs(object):
 
         while not self.__queue.empty() and not self.solutionNode:
             lastNode = self.__queue.get()
-            if lastNode == self.__end: 
+            if lastNode == self.__end and not self.solutionNode: 
                 self.solutionNode = lastNode
                 break
                 
