@@ -13,21 +13,24 @@ def main(argv):
     method = ''
     settings = ''
     gui = False
+    stdinRead = False
 
     try:
-        opts, args = getopt.getopt(argv, "hgb:d:n:", ["help", "gui", "bfs=", "dfs=", "nn="])
+        opts, args = getopt.getopt(argv, "hgrb:d:n:", ["help", "gui", "read", "bfs=", "dfs=", "nn="])
     except getopt.GetoptError as error:
         print(error)
         sys.exit(2)
 
     if len(opts) == 0:
-        start('astar', '1', True)
+        start('astar', '1', True, False)
 
     for opt, arg in opts:
         if opt in ("-h", "--help"):
             help()
         elif opt in ("-g", "--gui"):
             gui = True
+        elif opt in ("-r", "--read"):
+            stdinRead = True
         elif opt in ("-b", "--bfs"):
             method = 'bfs'
             settings = arg
@@ -40,13 +43,14 @@ def main(argv):
         else:
             assert False, "Error"
 
-    start(method, settings, gui)
+    start(method, settings, gui, stdinRead)
 
 def help():
     print("Usage: ./15Puzzles OPTION [VALUE]")
     print("Options:")
     print("     -h --help   this help")
     print("     -g --gui   run with gui")
+    print("     -r --read   read from stdin")
     print("     -b --bfs    breadth-first search")
     print("     -d --dfs    depth first search")
     print("     -n --nn     A*")
@@ -65,7 +69,7 @@ def help():
     print("     4 - Chebyshev Distance")
 
 
-def start(method, settings, gui):
+def start(method, settings, gui, stdinRead):
 
     if gui:
         from PyQt5 import QtGui, QtCore, QtWidgets
@@ -77,26 +81,61 @@ def start(method, settings, gui):
         sip.setapi('QUrl', 2)
         sip.setapi('QVariant', 2)
 
-    startFullTime = time.perf_counter()
+    startPuzzle = None
+    endPuzzle = None
 
-    row = 4
-    col = 4
+    if not stdinRead:
+        row = 4
+        col = 4
 
-    startPuzzle = np.array([[0,1,2,7],
+        startPuzzle = np.array([[0,1,2,7],
                             [8,9,12,10],
                             [13,3,6,4],
                             [15,14,11,5]])
 
-    endPuzzle = np.array([[1,2,3,4],
-                          [5,6,7,8],
-                          [9,10,11,12],
-                          [13,14,15,0]])
+        endPuzzle = np.empty((row, col))
+
+        element = 1
+        for i in range(row):
+            for j in range(col):
+                print(element)
+                endPuzzle[i][j] = element
+                element += 1
+        endPuzzle[-1][-1] = 0
+
+    else:
+
+        iteration = 0
+        for line in sys.stdin:
+            if not iteration:
+                row = line[0]
+                col = line[1]
+                
+            else:
+                for i in range(col):
+                    startPuzzle[iteration-1][i] = line[i]
+            
+            iteration += 1
+            
+        element = 1
+        for i in range(row):
+            for j in range(col):
+                print(element)
+                endPuzzle[i][j] = element
+                element += 1
+        endPuzzle[-1][-1] = 0
+         
+                      
+
+
 
     start = Node(startPuzzle)
     end = Node(endPuzzle)
 
     solutionNode = None
     visitedNodes = 0
+
+    startFullTime = time.perf_counter()
 
     if start.checkSolvability():
         
