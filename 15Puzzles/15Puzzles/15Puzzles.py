@@ -4,27 +4,30 @@ from Node import Node
 from Bfs import Bfs
 from Dfs import Dfs
 from AStar import AStar
+from Gui import MainWindow
 import numpy as np
-import sys, getopt, time
+import sys, getopt, time, ctypes, sip
 
 def main(argv):
 
     method = ''
     settings = ''
+    gui = False
 
     try:
-        opts, args = getopt.getopt(argv, "hb:d:n:", ["help", "bfs=", "dfs=", "nn="])
+        opts, args = getopt.getopt(argv, "hgb:d:n:", ["help", "gui", "bfs=", "dfs=", "nn="])
     except getopt.GetoptError as error:
         print(error)
         sys.exit(2)
 
     if len(opts) == 0:
-        help()
-        sys.exit()
+        start('astar', '1', True)
 
     for opt, arg in opts:
         if opt in ("-h", "--help"):
             help()
+        elif opt in ("-g", "--gui"):
+            gui = True
         elif opt in ("-b", "--bfs"):
             method = 'bfs'
             settings = arg
@@ -37,12 +40,13 @@ def main(argv):
         else:
             assert False, "Error"
 
-    start(method, settings)
+    start(method, settings, gui)
 
 def help():
     print("Usage: ./15Puzzles OPTION [VALUE]")
     print("Options:")
     print("     -h --help   this help")
+    print("     -g --gui   run with gui")
     print("     -b --bfs    breadth-first search")
     print("     -d --dfs    depth first search")
     print("     -n --nn     A*")
@@ -61,18 +65,32 @@ def help():
     print("     4 - Chebyshev Distance")
 
 
-def start(method, settings):
+def start(method, settings, gui):
+
+    if gui:
+        from PyQt5 import QtGui, QtCore, QtWidgets
+        sip.setapi('QDate', 2)
+        sip.setapi('QDateTime', 2)
+        sip.setapi('QString', 2)
+        sip.setapi('QTextStream', 2)
+        sip.setapi('QTime', 2)
+        sip.setapi('QUrl', 2)
+        sip.setapi('QVariant', 2)
 
     startFullTime = time.perf_counter()
 
     row = 4
     col = 4
 
-    startPuzzle = np.array([[2,3,1],
-                            [0,4,5]])
+    startPuzzle = np.array([[0,2,3,4],
+                            [5,6,1,8],
+                            [9,10,7,12],
+                            [13,14,11,15]])
 
-    endPuzzle = np.array([[1,2,3],
-                          [4,5,0]])
+    endPuzzle = np.array([[1,2,3,4],
+                          [5,6,7,8],
+                          [9,10,11,12],
+                          [13,14,15,0]])
 
     start = Node(startPuzzle)
     end = Node(endPuzzle)
@@ -125,6 +143,13 @@ def start(method, settings):
     if start.checkSolvability():
         print('Steps to solution: ', len(solutionMoves))
         print('Visited nodes: ', visitedNodes)
+
+    if gui and start.checkSolvability():
+        app = QtWidgets.QApplication(sys.argv)
+        app.setApplicationName("15Puzzles")
+        main = MainWindow(row, col, startPuzzle, 0, solutionMoves)
+        main.show()
+        app.exec_()
 
 if __name__ == "__main__":
     main(sys.argv[1:])    

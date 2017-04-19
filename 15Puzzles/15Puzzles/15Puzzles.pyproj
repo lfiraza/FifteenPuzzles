@@ -13,7 +13,7 @@
     <Name>15Puzzles</Name>
     <RootNamespace>15Puzzles</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>-b GDPL</CommandLineArguments>
+    <CommandLineArguments>-g -n 1</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -32,6 +32,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Dfs.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Gui.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Node.py">
