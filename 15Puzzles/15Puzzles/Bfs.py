@@ -36,7 +36,7 @@ class Bfs(object):
 
     def bfsLoop(self):
 
-        while not self.__queue.empty():
+        while not self.__queue.empty() and not self.solutionNode:
             lastNode = self.__queue.get()
             if lastNode == self.__end: 
                 self.solutionNode = lastNode
