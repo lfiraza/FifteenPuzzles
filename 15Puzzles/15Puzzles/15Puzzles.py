@@ -22,7 +22,7 @@ def main(argv):
         sys.exit(2)
 
     if len(opts) == 0:
-        start("astar", '1', True, False)
+        start("astar", '1', False, False)
 
     for opt, arg in opts:
         if opt in ("-h", "--help"):
@@ -43,7 +43,8 @@ def main(argv):
         else:
             assert False, "Error"
 
-    start(method, settings, gui, stdinRead)
+    if method != '':
+        start(method, settings, gui, stdinRead)
 
 def help():
     print("Usage: ./15Puzzles OPTION [VALUE]")
@@ -93,42 +94,47 @@ def start(method, settings, gui, stdinRead):
                             [13,3,6,4],
                             [15,14,11,5]])
 
-        endPuzzle = np.empty((row, col))
+        endPuzzle = np.zeros((row,col), int)
 
         element = 1
         for i in range(row):
-            for j in range(col):
-                endPuzzle[i][j] = element
-                element += 1
+                for j in range(col):
+                    endPuzzle[i][j] = element
+                    element += 1
+
         endPuzzle[-1][-1] = 0
 
     else:
 
         iteration = 0
         for line in sys.stdin:
+            line = line.split()
             if not iteration:
-                row = line[0]
-                col = line[1]
-                
+                row = int(line[0])
+                col = int(line[1])
+                startPuzzle = np.zeros((row,col), np.uint8)
             else:
                 for i in range(col):
-                    startPuzzle[iteration-1][i] = line[i]
-            
+                    startPuzzle[iteration-1][i] = int(line[i])
+
             iteration += 1
-            
+
+        endPuzzle = np.zeros((row,col), np.uint8)
+
+
         element = 1
         for i in range(row):
-            for j in range(col):
-                endPuzzle[i][j] = element
-                element += 1
-        endPuzzle[-1][-1] = 0
-         
-                      
+                for j in range(col):
+                    endPuzzle[i][j] = element
+                    element += 1
 
+        endPuzzle[-1][-1] = 0
 
 
     start = Node(startPuzzle)
     end = Node(endPuzzle)
+    print(startPuzzle)
+    print(endPuzzle)
 
     solutionNode = None
     visitedNodes = 0
