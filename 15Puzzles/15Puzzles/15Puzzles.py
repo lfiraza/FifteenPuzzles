@@ -97,7 +97,7 @@ def start(method, settings, gui, stdinRead):
                             [13,3,6,4],
                             [15,14,11,5]])
 
-        endPuzzle = np.zeros((col,row), int)
+        endPuzzle = np.zeros((row,col), int)
 
         element = 1
         for i in range(row):
@@ -115,14 +115,14 @@ def start(method, settings, gui, stdinRead):
             if not iteration:
                 row = int(line[0])
                 col = int(line[1])
-                startPuzzle = np.zeros((col,row), np.uint8)
+                startPuzzle = np.zeros((row,col), np.uint8)
             else:
                 for i in range(col):
                     startPuzzle[iteration-1][i] = int(line[i])
 
             iteration += 1
 
-        endPuzzle = np.zeros((col,row), np.uint8)
+        endPuzzle = np.zeros((row,col), np.uint8)
 
 
         element = 1
